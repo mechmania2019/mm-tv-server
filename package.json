@@ -1,5 +1,5 @@
 {
-  "name": "compiled-log-pull",
+  "name": "tv-server",
   "scripts": {
     "start": "micro ."
   },
