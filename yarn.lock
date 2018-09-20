@@ -8,13 +8,12 @@ async@2.1.4:
   dependencies:
     lodash "^4.14.0"
 
-aws-sdk@^2.203.0:
-  version "2.226.1"
-  resolved "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.226.1.tgz#8e6e2b466aaf26cb35714905d5f934e6c8317a99"
+aws-sdk@2.203.0:
+  version "2.203.0"
+  resolved "http://registry.npmjs.org/aws-sdk/-/aws-sdk-2.203.0.tgz#7573c1274a4350bd5d78a6db93c9eeab40940acb"
   dependencies:
     buffer "4.9.1"
-    events "1.1.1"
-    ieee754 "1.1.8"
+    events "^1.1.1"
     jmespath "0.15.0"
     querystring "0.2.0"
     sax "1.2.1"
@@ -75,9 +74,9 @@ depd@1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/depd/-/depd-1.1.1.tgz#5783b4e1c459f06fa5ca27f991f3d06e7a310359"
 
-events@1.1.1:
+events@^1.1.1:
   version "1.1.1"
-  resolved "https://registry.npmjs.org/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
+  resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
 
 http-errors@1.6.2:
   version "1.6.2"
@@ -91,10 +90,6 @@ http-errors@1.6.2:
 iconv-lite@0.4.19:
   version "0.4.19"
   resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
-
-ieee754@1.1.8:
-  version "1.1.8"
-  resolved "https://registry.npmjs.org/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
 
 ieee754@^1.1.4:
   version "1.1.11"
@@ -120,10 +115,6 @@ kareem@2.0.5:
   version "2.0.5"
   resolved "http://registry.npmjs.org/kareem/-/kareem-2.0.5.tgz#437e1e40f1be304ee21b3e4790eb3a05418b35ca"
 
-kareem@2.0.6:
-  version "2.0.6"
-  resolved "https://registry.npmjs.org/kareem/-/kareem-2.0.6.tgz#011ed59fd718bb147c63141a799fc888cd5a211b"
-
 lodash.get@4.4.2:
   version "4.4.2"
   resolved "https://registry.npmjs.org/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
@@ -132,25 +123,18 @@ lodash@^4.0.0, lodash@^4.14.0:
   version "4.17.5"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
-micro@^9.1.0:
-  version "9.1.4"
-  resolved "https://registry.npmjs.org/micro/-/micro-9.1.4.tgz#dbe655f34bb3390509898ddf3fda12348f5cbaa9"
+micro@9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/micro/-/micro-9.1.0.tgz#f2effba306639076e994c007c327dfc36a5185e9"
   dependencies:
     content-type "1.0.4"
     is-stream "1.1.0"
     mri "1.1.0"
     raw-body "2.3.2"
 
-mm-authenticate@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/mm-authenticate/-/mm-authenticate-0.0.2.tgz#8845314a9460734dc0f93405694eae6ea45c2bd7"
-  dependencies:
-    micro "^9.1.0"
-    mm-schemas "0.0.2"
-
-mm-schemas@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/mm-schemas/-/mm-schemas-0.0.2.tgz#2853f0c94e29a85c71676f915a42e90d94f61886"
+mm-schemas@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/mm-schemas/-/mm-schemas-0.0.5.tgz#f0442da61ab87ded3859c8a10f8f24196ab9de6c"
   dependencies:
     cuid "2.1.4"
     mongoose "5.0.7"
@@ -164,24 +148,11 @@ mongodb-core@3.0.2:
     bson "~1.0.4"
     require_optional "^1.0.1"
 
-mongodb-core@3.0.6:
-  version "3.0.6"
-  resolved "https://registry.npmjs.org/mongodb-core/-/mongodb-core-3.0.6.tgz#c1bf0ab868ece5b1d90917b58d7a8855cd8ba6ff"
-  dependencies:
-    bson "~1.0.4"
-    require_optional "^1.0.1"
-
 mongodb@3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.0.2.tgz#28172302ed4e9388d8091e2cc4618057e6f5debc"
   dependencies:
     mongodb-core "3.0.2"
-
-mongodb@3.0.6:
-  version "3.0.6"
-  resolved "https://registry.npmjs.org/mongodb/-/mongodb-3.0.6.tgz#72d2444b14f9784869e0c33436c49c8dca5083e4"
-  dependencies:
-    mongodb-core "3.0.6"
 
 mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
@@ -209,29 +180,9 @@ mongoose@5.0.7:
     regexp-clone "0.0.1"
     sliced "1.0.1"
 
-mongoose@^5.0.7:
-  version "5.0.15"
-  resolved "https://registry.npmjs.org/mongoose/-/mongoose-5.0.15.tgz#5260a65e5777224ae6a24f5dc8b8d39b548c826c"
-  dependencies:
-    async "2.1.4"
-    bson "~1.0.4"
-    kareem "2.0.6"
-    lodash.get "4.4.2"
-    mongodb "3.0.6"
-    mongoose-legacy-pluralize "1.0.2"
-    mpath "0.4.1"
-    mquery "3.0.0"
-    ms "2.0.0"
-    regexp-clone "0.0.1"
-    sliced "1.0.1"
-
 mpath@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.3.0.tgz#7a58f789e9b5fd3c94520634157960f26bd5ef44"
-
-mpath@0.4.1:
-  version "0.4.1"
-  resolved "https://registry.npmjs.org/mpath/-/mpath-0.4.1.tgz#ed10388430380bf7bbb5be1391e5d6969cb08e89"
 
 mquery@3.0.0:
   version "3.0.0"
@@ -249,10 +200,6 @@ mri@1.1.0:
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
-
-node-uuid@^1.4.8:
-  version "1.4.8"
-  resolved "https://registry.yarnpkg.com/node-uuid/-/node-uuid-1.4.8.tgz#b040eb0923968afabf8d32fb1f17f1167fdab907"
 
 punycode@1.3.2:
   version "1.3.2"
