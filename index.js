@@ -29,8 +29,8 @@ module.exports = async (req, res) => {
     console.log(`Getting a random record from mongo`);
     const team1 = randomItem(teams);
     const team2 = randomItem(teams);
-    if (team1 === team2) {
-      // Can't match a team against itself
+    if (team1 === team2 || !team1.latestScript || !team2.latestScript) {
+      // Find another match
       continue;
     }
     // Set team names
