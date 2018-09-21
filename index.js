@@ -3,10 +3,9 @@ const { promisify } = require("util");
 const mongoose = require("mongoose");
 const AWS = require("aws-sdk");
 const { send, buffer } = require("micro");
-const { Match, Script } = require("mm-schemas")(mongoose);
+const { Team, Match, Script } = require("mm-schemas")(mongoose);
 
 const MIN_MATCH_LENGTH = 6;
-const LAST_N_MATCHES_TO_PICK_FROM = 120;
 
 mongoose.connect(process.env.MONGO_URL);
 mongoose.Promise = global.Promise;
@@ -17,37 +16,37 @@ const s3 = new AWS.S3({
 
 const getObject = promisify(s3.getObject.bind(s3));
 
-module.exports = async (req, res) => {
-  // TODO: Prefer picking newer matches
-  console.log(`Getting a random record from mongo`);
-  const count = await Match.count()
-    .where("length")
-    .gt(MIN_MATCH_LENGTH)
-    .limit(LAST_N_MATCHES_TO_PICK_FROM)
-    .sort("-_id")
-    .exec();
-  console.log(`There are ${count} matches to pick from`);
-  const random = Math.floor(Math.random() * count);
-  console.log(`Grabbing record ${random}`);
-  const match = await Match.findOne()
-    .where("length")
-    .gt(MIN_MATCH_LENGTH)
-    .limit(LAST_N_MATCHES_TO_PICK_FROM)
-    .sort("-_id")
-    .skip(random)
-    .exec();
-  console.log(`${match.key} - Parsing match key`);
-  const [s1, s2] = match.key.slice("logs/".length).split(":");
-  console.log(`${s1} v ${s2} - Getting team names`);
-  const [t1, t2] = await Promise.all(
-    [s1, s2].map(async s => {
-      const script = await Script.findOne({ key: s })
-        .populate("owner")
-        .exec();
-      return script.owner.name;
-    })
-  );
+const randomItem = l => l[Math.floor(Math.random() * l.length)];
 
+module.exports = async (req, res) => {
+  console.log(`Getting all active teams`);
+  const teams = await Team.find({})
+    .populate("latestScript")
+    .exec();
+  let t1, t2, match;
+  while (!match) {
+    // Keep picking random matches till all conditions are met
+    console.log(`Getting a random record from mongo`);
+    const team1 = randomItem(teams);
+    const team2 = randomItem(teams);
+    if (team1 === team2) {
+      // Can't match a team against itself
+      continue;
+    }
+    // Set team names
+    t1 = team1.name;
+    t2 = team2.name;
+    console.log(`Fetching matchup for ${t1} v ${t2}`);
+    // Find the match record
+    const gameRegex = `${team1.latestScript.key}:${team2.latestScript.key}|${
+      team2.latestScript.key
+    }:${team1.latestScript.key}`;
+    match = await Match.findOne({ key: { $regex: gameRegex } })
+      .where("length")
+      .gt(MIN_MATCH_LENGTH)
+      .exec();
+  }
+  console.log(`${match.key} - Found match`);
   console.log(`${t1} v ${t2} - Sending headers`);
   res.setHeader("X-team-1", t1);
   res.setHeader("X-team-2", t2);
