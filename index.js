@@ -23,12 +23,12 @@ module.exports = async (req, res) => {
   const teams = await Team.find({})
     .populate("latestScript")
     .exec();
-  let t1, t2, match;
+  let t1, t2, team1, team2, match;
   while (!match) {
     // Keep picking random matches till all conditions are met
     console.log(`Getting a random record from mongo`);
-    const team1 = randomItem(teams);
-    const team2 = randomItem(teams);
+    team1 = randomItem(teams);
+    team2 = randomItem(teams);
     if (team1 === team2 || !team1.latestScript || !team2.latestScript) {
       // Find another match
       continue;
@@ -50,12 +50,13 @@ module.exports = async (req, res) => {
   console.log(`${t1} v ${t2} - Sending headers`);
 
   // Check whether our player1 id matches the one in the log
-  const log_p1_key = match.substring('logs/'.length).split(":")[0]
-  if(log_p1_key === team1.latestScript.key){
+  const log_p1_key = match.key.slice("logs/".length).split(":")[0];
+  if (log_p1_key === team1.latestScript.key) {
     res.setHeader("X-team-1", t1);
     res.setHeader("X-team-2", t2);
   } else {
     // Switch headers since our key is switched
+    console.log("Teams were flipped because of key script locations");
     res.setHeader("X-team-1", t2);
     res.setHeader("X-team-2", t1);
   }
