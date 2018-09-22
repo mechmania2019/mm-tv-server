@@ -48,8 +48,17 @@ module.exports = async (req, res) => {
   }
   console.log(`${match.key} - Found match`);
   console.log(`${t1} v ${t2} - Sending headers`);
-  res.setHeader("X-team-1", t1);
-  res.setHeader("X-team-2", t2);
+
+  // Check whether our player1 id matches the one in the log
+  const log_p1_key = match.substring('logs/'.length).split(":")[0]
+  if(log_p1_key === team1.latestScript.key){
+    res.setHeader("X-team-1", t1);
+    res.setHeader("X-team-2", t2);
+  } else {
+    // Switch headers since our key is switched
+    res.setHeader("X-team-1", t2);
+    res.setHeader("X-team-2", t1);
+  }
 
   console.log(`${t1} v ${t2} - Streaming match ${match.key} from s3`);
   try {
