@@ -2,8 +2,9 @@ const { promisify } = require("util");
 
 const mongoose = require("mongoose");
 const AWS = require("aws-sdk");
-const { send, buffer } = require("micro");
 const { Team, Match, Script } = require("mm-schemas")(mongoose);
+
+const send = (res, status, data) => (res.statusCode = status, res.end(data));
 
 const MIN_MATCH_LENGTH = 6;
 

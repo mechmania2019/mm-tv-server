@@ -1,11 +1,10 @@
 {
   "name": "tv-server",
   "scripts": {
-    "start": "micro ."
+    "start": "node index.js"
   },
   "dependencies": {
     "aws-sdk": "2.203.0",
-    "micro": "9.1.0",
     "mm-schemas": "0.0.6",
     "mongoose": "5.0.7"
   }
