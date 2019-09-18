@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "aws-sdk": "2.203.0",
-    "mm-schemas": "0.0.8",
-    "mongoose": "5.0.7"
+    "mm-schemas": "0.0.10",
+    "mongoose": "5.7.1"
   }
 }
