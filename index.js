@@ -4,15 +4,20 @@ const mongoose = require("mongoose");
 const AWS = require("aws-sdk");
 const { Team, Match, Script } = require("mm-schemas")(mongoose);
 
-const send = (res, status, data) => (res.statusCode = status, res.end(data));
+const send = (res, status, data) => ((res.statusCode = status), res.end(data));
 
 const MIN_MATCH_LENGTH = 6;
 
 mongoose.connect(process.env.MONGO_URL);
 mongoose.Promise = global.Promise;
 
+AWS.config.update({
+  accessKeyId: process.env.MM_AWS_SECRET_KEY_ID,
+  secretAccessKey: process.env.MM_AWS_SECRET_ACCESS_KEY,
+  bucketname: "mechmania2019"
+});
 const s3 = new AWS.S3({
-  params: { Bucket: "mechmania" }
+  params: { Bucket: "mechmania2019" }
 });
 
 const getObject = promisify(s3.getObject.bind(s3));
@@ -39,9 +44,7 @@ module.exports = async (req, res) => {
     t2 = team2.name;
     console.log(`Fetching matchup for ${t1} v ${t2}`);
     // Find the match record
-    const gameRegex = `${team1.latestScript.key}:${team2.latestScript.key}|${
-      team2.latestScript.key
-    }:${team1.latestScript.key}`;
+    const gameRegex = `${team1.latestScript.key}:${team2.latestScript.key}|${team2.latestScript.key}:${team1.latestScript.key}`;
     match = await Match.findOne({ key: { $regex: gameRegex } })
       .where("length")
       .gt(MIN_MATCH_LENGTH)
@@ -64,7 +67,10 @@ module.exports = async (req, res) => {
 
   console.log(`${t1} v ${t2} - Streaming match ${match.key} from s3`);
   try {
-    return send(res, 200, s3.getObject({ Key: match.key }).createReadStream());
+    res.statusCode = 200;
+    s3.getObject({ Key: match.key })
+      .createReadStream()
+      .pipe(res);
   } catch (e) {
     return send(res, 500, "Error when getting the logfile");
   }
