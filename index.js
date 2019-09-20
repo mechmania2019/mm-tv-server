@@ -6,7 +6,7 @@ const { Team, Match, Script } = require("mm-schemas")(mongoose);
 
 const send = (res, status, data) => ((res.statusCode = status), res.end(data));
 
-const MIN_MATCH_LENGTH = 1;
+const MIN_MATCH_LENGTH = 3;
 
 mongoose.connect(process.env.MONGO_URL);
 mongoose.Promise = global.Promise;
